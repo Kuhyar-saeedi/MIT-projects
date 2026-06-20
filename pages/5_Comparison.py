@@ -259,20 +259,19 @@ for i, name in enumerate(scenarios_radar):
         norm(rec_vals[i],   min(rec_vals),  max(rec_vals)),
     ])
 
-radar_colors = ["#00E676", "#00D4FF", "#7B61FF"]
+radar_colors      = ["#00E676",              "#00D4FF",              "#7B61FF"]
+radar_fillcolors  = ["rgba(0,230,118,0.15)", "rgba(0,212,255,0.15)", "rgba(123,97,255,0.15)"]
 fig_radar = go.Figure()
-for i, (name, vals, color) in enumerate(zip(scenarios_radar, radar_data, radar_colors)):
+for name, vals, color, fill in zip(scenarios_radar, radar_data, radar_colors, radar_fillcolors):
     fig_radar.add_trace(go.Scatterpolar(
         r=vals + [vals[0]],
         theta=categories + [categories[0]],
         fill="toself",
         name=name,
         line_color=color,
-        fillcolor=color.replace("#","rgba(").replace(")", f",0.12)").replace("rgba(","rgba("),
+        fillcolor=fill,
         opacity=0.85,
     ))
-    # Manually fix fillcolor
-    fig_radar.data[i].fillcolor = f"{color}1E"
 
 fig_radar.update_layout(
     template="plotly_dark",
